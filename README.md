@@ -15,5 +15,3 @@ sudo chown -R $USER:$USER *.*
 docker-compose run --rm app bundle install
 
 docker-compose run --rm app bundle exec rails db:create db:migrate
-
-docker-compose run --rm app bundle exec yarn add bootstrap
