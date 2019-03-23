@@ -1,5 +1,5 @@
-FROM ruby:2.5.5
- 
+FROM ruby:2.5.3
+
 # add nodejs and yarn dependencies for the frontend
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -11,7 +11,7 @@ nodejs yarn build-essential libpq-dev imagemagick git-all nano
  
  
 # Seta nosso path
-ENV INSTALL_PATH /onebitexchange
+ENV INSTALL_PATH /team3
  
 # Cria nosso diretório
 RUN mkdir -p $INSTALL_PATH
