@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* **Montando o projeto:**
 
-Things you may want to cover:
+git clone https://github.com/pedromschmitt/bootcamp-team3.git
 
-* Ruby version
+docker-compose build
 
-* System dependencies
+* **lembre de rodar para evitar erros:**
 
-* Configuration
+sudo chown -R $USER:$USER *.*
 
-* Database creation
+* **Depois:**
 
-* Database initialization
+docker-compose run --rm app bundle install
 
-* How to run the test suite
+docker-compose run --rm app bundle exec rails db:create db:migrate
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+docker-compose run --rm app bundle exec yarn add bootstrap
