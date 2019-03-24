@@ -15,12 +15,6 @@ ActiveRecord::Schema.define(version: 2019_03_24_135842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pomodoro_settings", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "duration"
@@ -43,12 +37,11 @@ ActiveRecord::Schema.define(version: 2019_03_24_135842) do
   create_table "tasks", force: :cascade do |t|
     t.string "description"
     t.integer "status"
+    t.integer "category"
     t.datetime "date"
-    t.bigint "category_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -66,6 +59,5 @@ ActiveRecord::Schema.define(version: 2019_03_24_135842) do
 
   add_foreign_key "pomodoro_settings", "users"
   add_foreign_key "pomodoros", "tasks"
-  add_foreign_key "tasks", "categories"
   add_foreign_key "tasks", "users"
 end

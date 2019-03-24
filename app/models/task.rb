@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
-  belongs_to :category
   belongs_to :user
-  has_many :categories, :pomodoros
+  has_many :pomodoros
+
+  enum category: [:work, :home]
 end
