@@ -80,4 +80,41 @@ RSpec.describe PomodoroSettingsController, type: :controller do
     end
   end
 
+  describe 'PUT #update' do
+    before(:each) do
+      request.env['HTTP_ACCEPT'] = 'application/json'
+    end
+
+    context 'As Logged User' do
+      before(:each) do
+        @pomodoro_setting = create(:pomodoro_setting, user_id: @current_user.id)
+        @pomodoro_setting_updated = attributes_for(:pomodoro_setting, user_id: @pomodoro_setting.user_id)
+        sign_in @current_user
+        put :update, params: { id: @pomodoro_setting.id, pomodoro_setting: @pomodoro_setting_updated }
+      end
+
+      it 'return success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'member has updated attributes' do
+        expect(PomodoroSetting.last.duration).to eq(@pomodoro_setting_updated[:duration])
+        expect(PomodoroSetting.last.short_break).to eq(@pomodoro_setting_updated[:short_break])
+        expect(PomodoroSetting.last.long_break).to eq(@pomodoro_setting_updated[:long_break])
+      end
+    end
+
+    context 'As User not Logged in' do
+      before(:each) do
+        @pomodoro_setting = create(:pomodoro_setting, user_id: @current_user.id)
+        @pomodoro_setting_updated = attributes_for(:pomodoro_setting, user_id: @pomodoro_setting.user_id)
+        put :update, params: { id: @pomodoro_setting.id, pomodoro_setting: @pomodoro_setting_updated }
+      end
+
+      it 'return http unauthorized' do
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
 end
