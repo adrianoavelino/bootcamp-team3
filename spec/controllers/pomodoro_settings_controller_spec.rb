@@ -31,6 +31,18 @@ RSpec.describe PomodoroSettingsController, type: :controller do
         .to change(PomodoroSetting, :count).by(1)
       end
     end
+
+    context 'As User not Logged in' do
+      before(:each) do
+        @current_user = FactoryBot.create(:user)
+      end
+
+      it 'redirect to login' do
+        @pomodoro_setting = attributes_for(:pomodoro_setting, user_id: @current_user.id)
+        post :create, params: { pomodoro_setting: @pomodoro_setting }
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
   end
 
 end
