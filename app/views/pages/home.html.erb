@@ -53,8 +53,12 @@
               <span class="tomato <%= pomodoro.status %>"></span>
             <% end %>
           </td>
-          <td>Iniciar</td>
-          <td>concluir tarefa </td>
+          <td>
+            <button class="btn btn-primary" type="button" name="button">Iniciar</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-success">concluir tarefa</button>
+          </td>
         </tr>
         <% end %>
       </tbody>
@@ -70,8 +74,6 @@
         <tr class="table-secondary">
           <th>ID</th>
           <th>Tarefa</th>
-          <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -86,8 +88,6 @@
               <span class="tomato <%= pomodoro.status %>"></span>
             <% end %>
           </td>
-          <td>Iniciar</td>
-          <td>concluir tarefa </td>
         </tr>
         <% end %>
       </tbody>
