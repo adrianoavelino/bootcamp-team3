@@ -7,5 +7,5 @@ class Task < ApplicationRecord
     home: 2
   }
 
-  validates :description, :status, :category, :date, :user_id, presence: true
+  validates :description, :status, :date, :user_id, presence: true
 end

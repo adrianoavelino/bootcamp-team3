@@ -5,11 +5,17 @@
       </div>
   </div>
 
-  <div class="row d-flex justify-content-center mb-5 mt-5">
+  <div class="row msg  d-flex justify-content-center mt-5">
+
+  </div>
+  <div class="row d-flex justify-content-center mb-5">
     <%= form_for(Task.new) do |f| %>
       <div class="form-inline">
         <div class="form-group mb-2">
           <%= f.hidden_field :id %>
+          <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+          <%= f.hidden_field :status, value: 0 %>
+          <%= f.hidden_field :date, value: Time.now %>
         </div>
         <div class="form-group mb-2">
           <label>Tarefa: </label>
@@ -35,7 +41,7 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="tasks">
         <% @tasks.each do |task| %>
         <tr>
           <td><%= task.id %></td>
