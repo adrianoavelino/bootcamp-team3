@@ -18,9 +18,12 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <table class="table table-dark" style="width: 60%">
+    <h2>Tarefas a Fazer</h2>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <table class="table table-sm table-bordered" style="width: 60%">
       <thead>
-        <tr>
+        <tr class="table-secondary">
           <th>ID</th>
           <th>Tarefa</th>
           <th></th>
@@ -39,41 +42,44 @@
               <span class="tomato <%= pomodoro.status %>"></span>
             <% end %>
           </td>
-          <td>start</td>
-          <td>
-            <% task.pomodoros.each do |pomodoro| %>
-              <span class="tomato <%= pomodoro.status %>"></span>
-            <% end %>
-          </td>
+          <td>Iniciar</td>
+          <td>concluir tarefa </td>
         </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 
-  <div class="row d-flex justify-content-center mb-5">
-    <div class="card">
-      <div class="card-header">
-        Tarefas a fazer
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="row"></div>
-
   <div class="row d-flex justify-content-center">
-    <div class="card">
-      <div class="card-header">
-        Tarefas feitas
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
+    <h2>Tarefas Feitas</h2>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <table class="table table-sm table-bordered" style="width: 60%">
+      <thead>
+        <tr class="table-secondary">
+          <th>ID</th>
+          <th>Tarefa</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td>
+            <%= task.description %>
+            <%= task.pomodoros[0].status if task.pomodoros[0] != nil %>
+            <br>
+            <% task.pomodoros.each do |pomodoro| %>
+              <span class="tomato <%= pomodoro.status %>"></span>
+            <% end %>
+          </td>
+          <td>Iniciar</td>
+          <td>concluir tarefa </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
