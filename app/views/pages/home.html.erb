@@ -1,2 +1,96 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container">
+
+  <div class="row  d-flex justify-content-center mt-2">
+      <div class="pomodoro_time">
+      </div>
+  </div>
+
+  <div class="row msg  d-flex justify-content-center mt-5">
+
+  </div>
+  <div class="row d-flex justify-content-center mb-5">
+    <%= form_for(Task.new) do |f| %>
+      <div class="form-inline">
+        <div class="form-group mb-2">
+          <%= f.hidden_field :id %>
+          <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+          <%= f.hidden_field :status, value: 0 %>
+          <%= f.hidden_field :date, value: Time.now %>
+        </div>
+        <div class="form-group mb-2">
+          <label>Tarefa: </label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <%= f.text_field :description, class: 'form-control', placeholder: 'Digite aqui a sua tarefa' %>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Criar tarefa</button>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <h2>Tarefas a Fazer</h2>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <table class="table table-sm table-bordered" style="width: 60%">
+      <thead>
+        <tr class="table-secondary">
+          <th>ID</th>
+          <th>Tarefa</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="tasks">
+        <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td>
+            <%= task.description %>
+            <%= task.pomodoros[0].status if task.pomodoros[0] != nil %>
+            <br>
+            <% task.pomodoros.each do |pomodoro| %>
+              <span class="tomato <%= pomodoro.status %>"></span>
+            <% end %>
+          </td>
+          <td>Iniciar</td>
+          <td>concluir tarefa </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <h2>Tarefas Feitas</h2>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <table class="table table-sm table-bordered" style="width: 60%">
+      <thead>
+        <tr class="table-secondary">
+          <th>ID</th>
+          <th>Tarefa</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td>
+            <%= task.description %>
+            <%= task.pomodoros[0].status if task.pomodoros[0] != nil %>
+            <br>
+            <% task.pomodoros.each do |pomodoro| %>
+              <span class="tomato <%= pomodoro.status %>"></span>
+            <% end %>
+          </td>
+          <td>Iniciar</td>
+          <td>concluir tarefa </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
