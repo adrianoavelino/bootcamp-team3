@@ -1,0 +1,17 @@
+.tomato {
+  background-color: #fff;
+  min-height: 20px;
+  min-width: 20px;
+  width: 20px;
+  heigth: 20px;
+  border-radius: 60%;
+  display: inline-block;
+}
+
+.finished {
+  background-color: red;
+}
+
+.canceled {
+  background-color: #ccc;
+}
