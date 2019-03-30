@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :pomodoros
+  has_many :pomodoros, dependent: :destroy
 
   enum category: {
     work: 1,

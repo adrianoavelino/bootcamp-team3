@@ -7,12 +7,72 @@ $(document).on 'turbolinks:load', ->
       data: $("#new_task").serialize()
       success: (data, text, jqXHR) ->
         $('.msg').html('<div class="alert alert-success">' + 'Tarefa cadastrada com sucesso!' + '</div>').fadeIn()
-        $('#task_description').val('')
-        task = '<tr> <td>'+data['id']+'</td> <td> '+data['description']+' <br> </td> <td>Iniciar</td> <td>concluir tarefa </td> </tr>'
+        id = data['id']
+        description = data['description']
+
+        task = '<tr>'+
+                  '<td>'+id+'</td>'+
+                  '<td class="tomatos_'+id+'"> '+data['description']+' <br> </td>'+
+                  '<td> <button class="btn btn-warning" disabled="">fazendo</button> </td>'+
+                  '<td> '+
+                    '<form class="new_pomodoro" id="new_pomodoro" data="add-pomodoro_'+id+'" action="/pomodoros" method="post"> '+
+                      '<input name="utf8" type="hidden" value="✓">'+
+                      '<input type="hidden" name="authenticity_token" value="JORxoLeBNg5Banpig8Ezoyr/ezwTz3yuvoF3XBBgjbdf+OY9RutqLzmDBry0z+qP3cuueD9HXUZ7D69BeD71rA==">' +
+                      '<input value="'+id+'" type="hidden" name="task_id" id="pomodoro_task_id"> '+
+                      '<input value="2019-03-30 16:01:16 +0000" type="hidden" name="date" id="pomodoro_date">'+
+                      '<input value="canceled" type="hidden" name="status" id="pomodoro_status">'+
+                      '<input type="submit" name="commit" value="Iniciar" class="btn btn-primary" data-disable-with="Iniciar">'+
+                    '</form>'+
+                    '</td> '+
+                    '<td> '+
+                      '<form class="edit_task" id="edit_task_'+id+'" data="task_done" action="/tasks/'+id+'" method="post">'+
+                        '<input value="'+id+'" type="hidden" name="task[id]" id="task_id">'+
+                        '<input value="'+id+'" type="hidden" name="task[id]" id="task_id">'+
+                        '<input value="1" type="hidden" name="task[status]" id="task_status">'+
+                        '<input type="submit" name="commit" value="concluir tarefa" class="btn btn-success" data-disable-with="concluir tarefa">'+
+                      '</form>'+
+                    '</td>' +
+                '</tr>'
 
         $('.tasks').append(task)
-      error: (jqXHR, textStatus, errorThrown) ->
-        $('.msg').html('<div class="alert alert-danger">' + jqXHR.responseJSON[0] + '</div>').fadeIn()
+
+        $('#task_description').val('')
+
+        form_append_pomodoro = '[data=add-pomodoro_'+id+']'
+        $(form_append_pomodoro).on 'click', (e) ->
+          e.preventDefault
+          date = data['date']
+          $.ajax '/pomodoros',
+            type: 'POST'
+            dataType: 'json',
+            data: {pomodoro: {"task_id": id, "date":date, "status":"canceled"}}
+            success: (data, text, jqXHR) ->
+              tomato = '<span class="tomato canceled"></span>'
+              tomatos = '.tomatos_' + data['task_id']
+              $(tomatos).append(tomato)
+            error: (jqXHR, textStatus, errorThrown) ->
+              $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
+          return false
+
+        form_append_event_task_done = '#edit_task_'+id
+        $(form_append_event_task_done).on 'click', (e) ->
+          e.preventDefault
+          id = $(this)[0][1].value
+          task_removed = $(this).parent().parent()
+          $.ajax '/tasks/' + id,
+            type: 'PUT'
+            dataType: 'json',
+            data: $(this).serialize()
+            success: (data, text, jqXHR) ->
+              task_removed.remove()
+              pomodoros = data.pomodoros.map((p) ->
+                '<span class="tomato ' + p.status + '"></span>'
+              )
+              task = '<tr> <td>'+data['id']+'</td> <td>'+data['description']+'<br>'+pomodoros.join('')+'</td> </tr>'
+              $('.tasks_done').append(task)
+            error: (jqXHR, textStatus, errorThrown) ->
+              $('.msg').html('<div class="alert alert-danger">' + 'Erro ao concluir tarefa' + '</div>').fadeIn()
+          return false
 
   $('[data=add-pomodoro]').on 'click', (e) ->
     e.preventDefault
