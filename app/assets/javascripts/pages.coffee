@@ -26,7 +26,9 @@ $(document).on 'turbolinks:load', ->
                     '</td> '+
                     '<td> '+
                       '<form class="edit_task" id="edit_task_'+id+'" data="task_done" action="/tasks/'+id+'" method="post">'+
-                        '<input value="'+id+'" type="hidden" name="task[id]" id="task_id">'+
+                        '<input name="utf8" type="hidden" value="✓">'+
+                        '<input type="hidden" name="_method" value="patch">'+
+                        '<input type="hidden" name="authenticity_token" value="q0qRHGKtArOPn9k6P+WR+uuti5XJa9M6/NNP/VRiqajQVgaBk8dekvd2peQI60jWHJle0eXj8tI5XZfgPDzRsw==">'+
                         '<input value="'+id+'" type="hidden" name="task[id]" id="task_id">'+
                         '<input value="1" type="hidden" name="task[status]" id="task_status">'+
                         '<input type="submit" name="commit" value="concluir tarefa" class="btn btn-success" data-disable-with="concluir tarefa">'+
@@ -38,8 +40,8 @@ $(document).on 'turbolinks:load', ->
 
         $('#task_description').val('')
 
-        form_append_pomodoro = '[data=add-pomodoro_'+id+']'
-        $(form_append_pomodoro).on 'click', (e) ->
+        form_append_event_start_pomodoro = '[data=add-pomodoro_'+id+']'
+        $(form_append_event_start_pomodoro).on 'click', (e) ->
           e.preventDefault
           date = data['date']
           $.ajax '/pomodoros',
@@ -52,26 +54,6 @@ $(document).on 'turbolinks:load', ->
               $(tomatos).append(tomato)
             error: (jqXHR, textStatus, errorThrown) ->
               $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
-          return false
-
-        form_append_event_task_done = '#edit_task_'+id
-        $(form_append_event_task_done).on 'click', (e) ->
-          e.preventDefault
-          id = $(this)[0][1].value
-          task_removed = $(this).parent().parent()
-          $.ajax '/tasks/' + id,
-            type: 'PUT'
-            dataType: 'json',
-            data: $(this).serialize()
-            success: (data, text, jqXHR) ->
-              task_removed.remove()
-              pomodoros = data.pomodoros.map((p) ->
-                '<span class="tomato ' + p.status + '"></span>'
-              )
-              task = '<tr> <td>'+data['id']+'</td> <td>'+data['description']+'<br>'+pomodoros.join('')+'</td> </tr>'
-              $('.tasks_done').append(task)
-            error: (jqXHR, textStatus, errorThrown) ->
-              $('.msg').html('<div class="alert alert-danger">' + 'Erro ao concluir tarefa' + '</div>').fadeIn()
           return false
 
   $('[data=add-pomodoro]').on 'click', (e) ->
@@ -88,7 +70,7 @@ $(document).on 'turbolinks:load', ->
         $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
     return false
 
-  $('[data=task_done]').on 'click', (e) ->
+  $('body').on 'click', '[data=task_done]', (e) ->
     e.preventDefault
     id = $(this)[0][3].value
     task_removed = $(this).parent().parent()
