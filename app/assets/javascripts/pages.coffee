@@ -13,3 +13,17 @@ $(document).on 'turbolinks:load', ->
         $('.tasks').append(task)
       error: (jqXHR, textStatus, errorThrown) ->
         $('.msg').html('<div class="alert alert-danger">' + jqXHR.responseJSON[0] + '</div>').fadeIn()
+
+  $('[data=add-pomodoro]').on 'click', (e) ->
+    e.preventDefault
+    $.ajax '/pomodoros',
+      type: 'POST'
+      dataType: 'json',
+      data: $(this).serialize()
+      success: (data, text, jqXHR) ->
+        tomato = '<span class="tomato canceled"></span>'
+        tomatos = '.tomatos_' + data['task_id']
+        $(tomatos).append(tomato)
+      error: (jqXHR, textStatus, errorThrown) ->
+        $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
+    return false

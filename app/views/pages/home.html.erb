@@ -45,7 +45,7 @@
         <% @tasks.each do |task| %>
         <tr>
           <td><%= task.id %></td>
-          <td>
+          <td class="tomatos_<%= task.id %>">
             <%= task.description %>
             <%= task.pomodoros[0].status if task.pomodoros[0] != nil %>
             <br>
@@ -54,7 +54,12 @@
             <% end %>
           </td>
           <td>
-            <button class="btn btn-primary" type="button" name="button">Iniciar</button>
+             <%= form_for(Pomodoro.new, data: 'add-pomodoro') do |f| %>
+               <%= f.hidden_field :task_id, value: task.id %>
+               <%= f.hidden_field :date, value: Time.now %>
+               <%= f.hidden_field :status, value: :canceled %>
+               <%= submit_tag("Iniciar", class: "btn btn-primary") %>
+             <% end %>
           </td>
           <td>
             <button type="button" class="btn btn-success">concluir tarefa</button>
