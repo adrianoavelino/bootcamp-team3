@@ -4,7 +4,7 @@
       <div class="pomodoro_time">
       </div>
   </div>
-
+  <% if user_signed_in? %>
   <div class="row msg  d-flex justify-content-center mt-5">
 
   </div>
@@ -114,4 +114,21 @@
       </tbody>
     </table>
   </div>
+  <% else %>
+    <div class="row  mt-2">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header col-12">
+            Tarefas:
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Faço o seu cadastro,</h5>
+            <p class="card-text">E salve todas as suas tarefas</p>
+            <%= link_to 'Crie o seu login', new_user_session_path, class:'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
 </div>
