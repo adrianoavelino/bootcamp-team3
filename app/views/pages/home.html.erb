@@ -71,7 +71,13 @@
              <% end %>
           </td>
           <td>
-            <button type="button" class="btn btn-success">concluir tarefa</button>
+
+            <%= form_for(task, html: { data: 'task_done' }) do |f| %>
+              <%= f.hidden_field :id, value: task.id %>
+              <%= f.hidden_field :status, value: 1 %>
+              <%= submit_tag("concluir tarefa", class: "btn btn-success") %>
+            <% end %>
+            <!-- <button type="button" class="btn btn-success btn_task_done">concluir tarefa</button> -->
           </td>
         </tr>
         <% end %>
@@ -90,7 +96,7 @@
           <th>Tarefa</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="tasks_done">
         <% @done_tasks = @tasks.select {|task| task.status == 1} %>
         <% @done_tasks.each do |task| %>
         <tr>

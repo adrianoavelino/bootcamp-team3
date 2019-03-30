@@ -27,3 +27,22 @@ $(document).on 'turbolinks:load', ->
       error: (jqXHR, textStatus, errorThrown) ->
         $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
     return false
+
+  $('[data=task_done]').on 'click', (e) ->
+    e.preventDefault
+    id = $(this)[0][3].value
+    task_removed = $(this).parent().parent()
+    $.ajax '/tasks/' + id,
+      type: 'PUT'
+      dataType: 'json',
+      data: $(this).serialize()
+      success: (data, text, jqXHR) ->
+        task_removed.remove()
+        pomodoros = data.pomodoros.map((p) ->
+          '<span class="tomato ' + p.status + '"></span>'
+        )
+        task = '<tr> <td>'+data['id']+'</td> <td>'+data['description']+'<br>'+pomodoros.join('')+'</td> </tr>'
+        $('.tasks_done').append(task)
+      error: (jqXHR, textStatus, errorThrown) ->
+        $('.msg').html('<div class="alert alert-danger">' + 'Erro ao concluir tarefa' + '</div>').fadeIn()
+    return false
