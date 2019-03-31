@@ -1,4 +1,5 @@
 {
+  "engines" : { "node" : ">=6" },
   "name": "pomodoro-team3",
   "private": true,
   "dependencies": {
