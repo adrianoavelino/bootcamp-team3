@@ -33,7 +33,10 @@ $(document).on 'turbolinks:load', ->
                         '<input value="1" type="hidden" name="task[status]" id="task_status">'+
                         '<input type="submit" name="commit" value="concluir tarefa" class="btn btn-success" data-disable-with="concluir tarefa">'+
                       '</form>'+
-                    '</td>' +
+                    '</td>'+
+                    '<td>'+
+                      '<a href="/tasks/'+id+'/edit">editar</a>'+
+                    '</td>'+
                 '</tr>'
 
         $('.tasks').append(task)
