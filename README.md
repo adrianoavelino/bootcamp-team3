@@ -15,11 +15,11 @@
     ```
 - instale as dependência do ruby:
     ```sh
-    docker-compose run --rm app bundle install 
+    docker-compose run --rm app bundle install
     ```
 - instale as dependências do yarn:
     ```sh
-    docker-compose run --rm app bundle exec yarn install 
+    docker-compose run --rm app bundle exec yarn install
     ```
 - crie os bancos de dados:
     ```sh
@@ -29,7 +29,4 @@
     ```sh
     docker-compose up
     ```
-- acese o projeto em: [http://localhost:3000/](http://localhost:3000/)
-
-
-
+- acesse o projeto em: [http://localhost:3000/](http://localhost:3000/)
