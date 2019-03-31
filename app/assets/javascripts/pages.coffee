@@ -72,7 +72,12 @@ $(document).on 'turbolinks:load', ->
       success: (data, text, jqXHR) ->
         tomato = '<span class="tomato canceled"></span>'
         tomatos = '.tomatos_' + data['task_id']
+        pomodoro_id =  data
         $(tomatos).append(tomato)
+        minutes = 0
+        seconds = 2
+        start_timer(seconds,minutes, seconds,pomodoro_id)
+
       error: (jqXHR, textStatus, errorThrown) ->
         $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
     return false
@@ -96,38 +101,56 @@ $(document).on 'turbolinks:load', ->
         $('.msg').html('<div class="alert alert-danger">' + 'Erro ao concluir tarefa' + '</div>').fadeIn()
     return false
 
-#   $('[data-js="start"]').on 'click', (e) ->
-#     minutes = 2
-#     seconds = 5
-#     start_timer(seconds,minutes, seconds)
-#
-# start_timer = (counter_seconds, counter_minutes, seconds_default) ->
-#   minutes = $('.minutes')
-#   seconds = $('.seconds')
-#   seconds_default = seconds_default
-#   seconds.text('0'+counter_seconds)
-#   minutes.text('0'+counter_minutes)
-#
-#   if counter_seconds >= 0 && counter_minutes > -1
-#     timer = setTimeout (->
-#       seconds.text('0'+counter_seconds--)
-#       console.log counter_minutes + ':' + counter_seconds
-#
-#       start_timer counter_seconds, counter_minutes, seconds_default
-#       return
-#     ), 1000
-#
-#   if counter_seconds < 0
-#     counter_seconds = seconds_default
-#     counter_minutes--
-#     start_timer counter_seconds, counter_minutes, seconds_default
-#     return
-#
-#   if counter_minutes < 0
-#     seconds.text('00')
-#     minutes.text('00')
-#     console.log 'stop'
-#     clearTimeout(timer);
-#     alert('stop')
-#
-#   return
+  $('[data-js="start"]').on 'click', (e) ->
+    minutes = 2
+    seconds = 5
+    alert('clique no iniciar da tarefa')
+    # start_timer(seconds,minutes, seconds)
+
+start_timer = (counter_seconds, counter_minutes, seconds_default, pomodoro_id) ->
+  minutes = $('.minutes')
+  seconds = $('.seconds')
+  seconds_default = seconds_default
+  seconds.text('0'+counter_seconds)
+  minutes.text('0'+counter_minutes)
+
+  if counter_seconds >= 0 && counter_minutes > -1
+    timer = setTimeout (->
+      seconds.text('0'+counter_seconds--)
+      console.log counter_minutes + ':' + counter_seconds
+
+      start_timer counter_seconds, counter_minutes, seconds_default, pomodoro_id
+      return
+    ), 1000
+
+  if counter_seconds < 0
+    counter_seconds = seconds_default
+    counter_minutes--
+    start_timer counter_seconds, counter_minutes, seconds_default, pomodoro_id
+    return
+
+  if counter_minutes < 0
+    seconds.text('00')
+    minutes.text('00')
+    clearTimeout(timer);
+    alert('O seu pomodoro terminou!')
+    console.log 'stop'
+    update_pomodoro(pomodoro_id['id'])
+
+  return
+
+update_pomodoro = (pomodoro_id) ->
+  $.ajax '/pomodoros/' + pomodoro_id,
+    type: 'PUT'
+    dataType: 'json'
+    data: pomodoro:
+      id: pomodoro_id
+      status: 'finished'
+    success: (data, text, jqXHR) ->
+      console.log 'update'
+      location.reload()
+      return
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log 'error update pomodoro'
+      return
+  return
