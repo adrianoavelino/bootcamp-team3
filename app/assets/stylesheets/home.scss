@@ -1,8 +1,42 @@
 .pomodoro_time {
+  margin: auto;
   border-radius: 50%;
   width: 300px;
   height: 300px;
   background-color: red;
+}
+
+// .minutes {
+//   background-color: yellow;
+// }
+//
+// .seconds {
+//   background-color: green;
+// }
+
+.minutes,
+.seconds,
+.separator {
+  display: inline-block;
+  background-color: #fff;
+}
+
+.minutes,
+.seconds {
+  width: 100px;
+  padding: 40px;
+  font-size: 30px;
+}
+
+.separator {
+  vertical-align: middle;
+  line-height: 120px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.timer {
+  padding-top: 20px;
 }
 
 .tomato {

@@ -1,7 +1,15 @@
 <div class="container">
 
-  <div class="row  d-flex justify-content-center mt-2">
+  <div class="row">
       <div class="pomodoro_time">
+        <div class="timer d-flex justify-content-center mt-5">
+          <div class="minutes">00</div>
+          <div class="separator">:</div>
+          <div class="seconds">00</div>
+        </div>
+        <div class="footer d-flex justify-content-center mt-3">
+          <button class="btn btn-primary" data-js="start">Iniciar</button>
+        </div>
       </div>
   </div>
   <% if user_signed_in? %>

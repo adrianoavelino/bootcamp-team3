@@ -95,3 +95,39 @@ $(document).on 'turbolinks:load', ->
       error: (jqXHR, textStatus, errorThrown) ->
         $('.msg').html('<div class="alert alert-danger">' + 'Erro ao concluir tarefa' + '</div>').fadeIn()
     return false
+
+#   $('[data-js="start"]').on 'click', (e) ->
+#     minutes = 2
+#     seconds = 5
+#     start_timer(seconds,minutes, seconds)
+#
+# start_timer = (counter_seconds, counter_minutes, seconds_default) ->
+#   minutes = $('.minutes')
+#   seconds = $('.seconds')
+#   seconds_default = seconds_default
+#   seconds.text('0'+counter_seconds)
+#   minutes.text('0'+counter_minutes)
+#
+#   if counter_seconds >= 0 && counter_minutes > -1
+#     timer = setTimeout (->
+#       seconds.text('0'+counter_seconds--)
+#       console.log counter_minutes + ':' + counter_seconds
+#
+#       start_timer counter_seconds, counter_minutes, seconds_default
+#       return
+#     ), 1000
+#
+#   if counter_seconds < 0
+#     counter_seconds = seconds_default
+#     counter_minutes--
+#     start_timer counter_seconds, counter_minutes, seconds_default
+#     return
+#
+#   if counter_minutes < 0
+#     seconds.text('00')
+#     minutes.text('00')
+#     console.log 'stop'
+#     clearTimeout(timer);
+#     alert('stop')
+#
+#   return
