@@ -55,6 +55,9 @@ $(document).on 'turbolinks:load', ->
             error: (jqXHR, textStatus, errorThrown) ->
               $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
           return false
+      error: (jqXHR, textStatus, errorThrown) ->
+        $('.msg').html('<div class="alert alert-danger">' + jqXHR.responseJSON[0] + '</div>').fadeIn()
+    return false
 
   $('[data=add-pomodoro]').on 'click', (e) ->
     e.preventDefault
