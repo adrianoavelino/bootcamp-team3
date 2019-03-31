@@ -81,6 +81,9 @@
           </td>
           <td>
             <%= link_to 'editar', edit_task_path(task.id) %>
+            <%= link_to 'deletar', task_path(task),
+                method: :delete,
+                data: { confirm: 'Você quer realmente deletar esta tarefa?'} %>
           </td>
         </tr>
         <% end %>

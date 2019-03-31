@@ -35,7 +35,8 @@ $(document).on 'turbolinks:load', ->
                       '</form>'+
                     '</td>'+
                     '<td>'+
-                      '<a href="/tasks/'+id+'/edit">editar</a>'+
+                      '<a href="/tasks/'+id+'/edit">editar</a> '+
+                      '<a data-confirm="Você quer realmente deletar esta tarefa?" rel="nofollow" data-method="delete" href="/tasks/'+id+'">deletar</a>'+
                     '</td>'+
                 '</tr>'
 
