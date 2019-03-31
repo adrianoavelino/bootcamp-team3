@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: %i[show update destroy]
+  before_action :set_task, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token
 
   def index
@@ -9,7 +9,13 @@ class TasksController < ApplicationController
   end
 
   def show
-    render json: @task, status: :ok
+    respond_to do |format|
+      format.html { render @task, status: 200 }
+    end
+  end
+
+  def edit
+
   end
 
   def create
@@ -23,14 +29,19 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      render json: {
-        id: @task.id,
-        description: @task.description,
-        pomodoros: @task.pomodoros
-        }, status: :ok
-    else
-      render json: @task.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @task.update(task_params)
+        format.html { redirect_to root_path }
+        format.json {
+          render json: {
+            id: @task.id,
+            description: @task.description,
+            pomodoros: @task.pomodoros
+            }, status: :ok
+          }
+      else
+        render json: @task.errors.full_messages, status: :unprocessable_entity
+      end
     end
   end
 
