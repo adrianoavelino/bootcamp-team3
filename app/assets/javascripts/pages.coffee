@@ -9,10 +9,12 @@ $(document).on 'turbolinks:load', ->
         $('.msg').html('<div class="alert alert-success">' + 'Tarefa cadastrada com sucesso!' + '</div>').fadeIn()
         id = data['id']
         description = data['description']
+        category = data['category'] || ""
 
         task = '<tr>'+
                   '<td>'+id+'</td>'+
                   '<td class="tomatos_'+id+'"> '+data['description']+' <br> </td>'+
+                  '<td>'+category+'</td>'+
                   '<td> <button class="btn btn-warning" disabled="">fazendo</button> </td>'+
                   '<td> '+
                     '<form class="new_pomodoro" id="new_pomodoro" data="add-pomodoro_'+id+'" action="/pomodoros" method="post"> '+

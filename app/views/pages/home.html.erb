@@ -46,6 +46,7 @@
           <th>ID</th>
           <th>Tarefa</th>
           <th>Status</th>
+          <th>Categoria</th>
           <th></th>
           <th></th>
           <th>#</th>
@@ -62,6 +63,9 @@
             <% task.pomodoros.each do |pomodoro| %>
               <span class="tomato <%= pomodoro.status %>"></span>
             <% end %>
+          </td>
+          <td>
+            <%= task.category %>
           </td>
           <td>
             <% if task.status == 0 %>
