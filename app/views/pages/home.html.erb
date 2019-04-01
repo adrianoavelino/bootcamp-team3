@@ -58,7 +58,6 @@
           <td><%= task.id %></td>
           <td class="tomatos_<%= task.id %>">
             <%= task.description %>
-            <%= task.pomodoros[0].status if task.pomodoros[0] != nil %>
             <br>
             <% task.pomodoros.each do |pomodoro| %>
               <span class="tomato <%= pomodoro.status %>"></span>

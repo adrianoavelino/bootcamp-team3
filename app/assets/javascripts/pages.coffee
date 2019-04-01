@@ -56,6 +56,10 @@ $(document).on 'turbolinks:load', ->
               tomato = '<span class="tomato canceled"></span>'
               tomatos = '.tomatos_' + data['task_id']
               $(tomatos).append(tomato)
+              pomodoro_id =  data
+              minutes = 5
+              seconds = 5
+              start_timer(seconds,minutes, seconds,pomodoro_id)
             error: (jqXHR, textStatus, errorThrown) ->
               $('.msg').html('<div class="alert alert-danger">' + 'Erro ao iniciar pomodoro' + '</div>').fadeIn()
           return false
@@ -74,8 +78,8 @@ $(document).on 'turbolinks:load', ->
         tomatos = '.tomatos_' + data['task_id']
         pomodoro_id =  data
         $(tomatos).append(tomato)
-        minutes = 0
-        seconds = 2
+        minutes = 5
+        seconds = 5
         start_timer(seconds,minutes, seconds,pomodoro_id)
 
       error: (jqXHR, textStatus, errorThrown) ->
@@ -102,7 +106,7 @@ $(document).on 'turbolinks:load', ->
     return false
 
   $('[data-js="start"]').on 'click', (e) ->
-    minutes = 2
+    minutes = 5
     seconds = 5
     alert('clique no iniciar da tarefa')
     # start_timer(seconds,minutes, seconds)
